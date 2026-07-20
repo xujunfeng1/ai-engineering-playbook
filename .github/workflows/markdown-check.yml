@@ -1,0 +1,25 @@
+name: markdown-check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  basic-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          test -f README.md
+          test -f LICENSE
+          test -f CONTRIBUTING.md
+          test -f templates/spec-template.md
+          test -f templates/pr-checklist.md
+
+      - name: Check script syntax
+        run: bash -n scripts/check-test-naming.sh
